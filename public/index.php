@@ -35,5 +35,8 @@ $zendLoader->register();
 $zendLoader = new \Doctrine\Common\ClassLoader('Core', APPLICATION_PATH);
 $zendLoader->register();
 
-$application = new \Core\Application();
-$application->run();
+$application = new \Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/Core/Config/main.ini'
+);
+$application->bootstrap()->run();
