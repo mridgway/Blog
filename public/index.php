@@ -1,11 +1,13 @@
 <?php
+ini_set('display_errors', 1); 
+error_reporting(-1);
 
 if (!defined('APPLICATION_PATH')) {
-    define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+    define('APPLICATION_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'application'));
 }
 
 if (!defined('APPLICATION_ROOT')) {
-    define('APPLICATION_ROOT', realpath(dirname(__FILE__) . '/..'));
+    define('APPLICATION_ROOT', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
 }
 
 if (!defined('APPLICATION_ENV')) {
@@ -16,19 +18,20 @@ if (!defined('APPLICATION_ENV')) {
     }
     define('APPLICATION_ENV', $env);
 }
-
-set_include_path(
-    APPLICATION_PATH . PATH_SEPARATOR
-    . APPLICATION_ROOT . '/library' . PATH_SEPARATOR
-    . get_include_path()
-);
+set_include_path( APPLICATION_PATH . PATH_SEPARATOR
+                . APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries' . PATH_SEPARATOR
+                . get_include_path()
+                );
 
 require_once('Doctrine/Common/ClassLoader.php');
 
-$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', APPLICATION_ROOT . '/library');
+$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
 $doctrineLoader->register();
 
-$zendLoader = new \Doctrine\Common\ClassLoader('Zend', APPLICATION_ROOT . '/library');
+$doctrineLoader = new \Doctrine\Common\ClassLoader('Ridg', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
+$doctrineLoader->register();
+
+$zendLoader = new \Doctrine\Common\ClassLoader('Zend', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
 $zendLoader->setNamespaceSeparator('_');
 $zendLoader->register();
 
@@ -37,6 +40,6 @@ $zendLoader->register();
 
 $application = new \Zend_Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . '/Core/Config/main.ini'
+    APPLICATION_PATH . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'main.ini'
 );
 $application->bootstrap()->run();

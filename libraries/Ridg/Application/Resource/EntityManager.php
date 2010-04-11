@@ -1,15 +1,15 @@
 <?php
 
-class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
-{
-    public function _initDispatcher()
-    {
-        $dispatcher = new \Ridg\Controller\Dispatcher\Standard();
-        \Zend_Controller_Front::getInstance()->setDispatcher($dispatcher);
-        \Zend_Controller_Front::getInstance()->setModuleControllerDirectoryName('Controller');
-    }
+namespace Ridg\Application\Resource;
 
-    public function _initDoctrine()
+class EntityManager extends \Zend_Application_Resource_ResourceAbstract
+{
+    /**
+     * Create Entity Manager
+     *
+     * @return Doctrine\ORM\EntityManager
+     */
+    public function init()
     {
         $cache = new \Doctrine\Common\Cache\ArrayCache();
         $config = new \Doctrine\ORM\Configuration();
@@ -19,7 +19,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         $config->setProxyDir(\APPLICATION_ROOT . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'proxies');
         $config->setProxyNamespace('Proxy');
         $connectionOptions = array(
-            'pdo' => $this->getPluginResource('db')->getDbAdapter()->getConnection()
+            'pdo' => $this->getBootstrap()->getPluginResource('db')->getDbAdapter()->getConnection()
         );
         $evm = new \Doctrine\Common\EventManager();
         $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config, $evm);
