@@ -5,11 +5,6 @@
  */
 class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 {
-    public function _initModuleAutoloader()
-    {
-        $autoloader = new \Doctrine\Common\ClassLoader('Core', APPLICATION_PATH);
-        $autoloader->register();
-    }
 
     public function _initDispatcher()
     {
