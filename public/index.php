@@ -18,20 +18,32 @@ if (!defined('APPLICATION_ENV')) {
     }
     define('APPLICATION_ENV', $env);
 }
+
+if (!defined('ZEND_PATH')) {
+    define('ZEND_PATH', realpath( APPLICATION_ROOT
+                                . DIRECTORY_SEPARATOR . 'vendor'
+                                . DIRECTORY_SEPARATOR . 'Zend'
+                                . DIRECTORY_SEPARATOR . 'library'));
+}
+
 set_include_path( APPLICATION_PATH . PATH_SEPARATOR
                 . APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries' . PATH_SEPARATOR
+                . ZEND_PATH . PATH_SEPARATOR
                 . get_include_path()
                 );
 
 require_once('Doctrine/Common/ClassLoader.php');
 
-$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
+$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', APPLICATION_ROOT
+                                                             . DIRECTORY_SEPARATOR . 'vendor'
+                                                             . DIRECTORY_SEPARATOR . 'Doctrine2'
+                                                             . DIRECTORY_SEPARATOR . 'lib');
 $doctrineLoader->register();
 
 $doctrineLoader = new \Doctrine\Common\ClassLoader('Ridg', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
 $doctrineLoader->register();
 
-$zendLoader = new \Doctrine\Common\ClassLoader('Zend', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
+$zendLoader = new \Doctrine\Common\ClassLoader('Zend', ZEND_PATH);
 $zendLoader->setNamespaceSeparator('_');
 $zendLoader->register();
 
