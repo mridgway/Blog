@@ -26,18 +26,23 @@ if (!defined('ZEND_PATH')) {
                                 . DIRECTORY_SEPARATOR . 'library'));
 }
 
+if (!defined('DOCTRINE_PATH')) {
+    define('DOCTRINE_PATH', realpath( APPLICATION_ROOT
+                                    . DIRECTORY_SEPARATOR . 'vendor'
+                                    . DIRECTORY_SEPARATOR . 'Doctrine2'
+                                    . DIRECTORY_SEPARATOR . 'lib'));
+}
+
 set_include_path( APPLICATION_PATH . PATH_SEPARATOR
                 . APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries' . PATH_SEPARATOR
                 . ZEND_PATH . PATH_SEPARATOR
+                . DOCTRINE_PATH . PATH_SEPARATOR
                 . get_include_path()
                 );
 
 require_once('Doctrine/Common/ClassLoader.php');
 
-$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', APPLICATION_ROOT
-                                                             . DIRECTORY_SEPARATOR . 'vendor'
-                                                             . DIRECTORY_SEPARATOR . 'Doctrine2'
-                                                             . DIRECTORY_SEPARATOR . 'lib');
+$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', DOCTRINE_PATH);
 $doctrineLoader->register();
 
 $doctrineLoader = new \Doctrine\Common\ClassLoader('Ridg', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
