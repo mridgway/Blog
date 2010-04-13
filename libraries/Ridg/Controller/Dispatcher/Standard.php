@@ -174,18 +174,6 @@ class Standard extends \Zend_Controller_Dispatcher_Standard
     /**
      * {@inheritdoc}
      *
-     * @param string $unformatted
-     * @return string
-     */
-    public function formatActionName($unformatted)
-    {
-        $formatted = $this->_formatName($unformatted, true);
-        return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
      * @param string $className
      * @return string Class name loaded
      * @throws Zend_Controller_Dispatcher_Exception if class not loaded
