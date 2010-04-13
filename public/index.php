@@ -57,6 +57,6 @@ $zendLoader->register();
 
 $application = new \Zend_Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'main.ini'
+    APPLICATION_PATH . DIRECTORY_SEPARATOR . 'application.ini'
 );
 $application->bootstrap()->run();
