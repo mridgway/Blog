@@ -2,7 +2,7 @@
 
 namespace Core\Controller;
 
-class Index extends \Zend_Controller_Action
+class Index extends \Ridg\Controller\Action
 {
     public function indexAction()
     {
