@@ -11,6 +11,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         $dispatcher = new \Ridg\Controller\Dispatcher\Standard();
         \Zend_Controller_Front::getInstance()->setDispatcher($dispatcher);
         \Zend_Controller_Front::getInstance()->setModuleControllerDirectoryName('Controller');
+        return $dispatcher;
     }
 
     public function _initDoctrine()
@@ -31,5 +32,11 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         \Zend_Registry::getInstance()->set('em', $em);
 
         return $em;
+    }
+
+    public function _initAuth()
+    {
+        $auth = \Zend_Auth::getInstance();
+        return $auth;
     }
 }
