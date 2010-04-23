@@ -4,6 +4,12 @@ namespace Blog\Controller;
 
 class Install extends \Ridg\Controller\Action
 {
+
+    /**
+     * @var Doctrine\ORM\EntityManager
+     */
+    protected $_em;
+
     /**
      * @var \Doctrine\ORM\Tools\SchemaTool
      */
@@ -16,13 +22,14 @@ class Install extends \Ridg\Controller\Action
 
     public function init()
     {
+        $this->_em = \Zend_Registry::get('em');
         $this->_tool = new \Doctrine\ORM\Tools\SchemaTool($this->_em);
         $this->_classes = array (
-            //$em->getClassMetadata('Core\Model\Module')
+            $this->_em->getClassMetadata('Blog\Model\Article')
         );
     }
 
-    public function installAction()
+    public function indexAction()
     {
         $this->_tool->createSchema($this->_classes);
     }

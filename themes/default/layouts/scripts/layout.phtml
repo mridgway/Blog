@@ -6,31 +6,44 @@
     <meta http-equiv="Content-Language" content="en-us" />
     <?php echo $this->headTitle(); ?>
 
-    <?php echo $this->headScript(); ?>
-
+    
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssreset/reset-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssbase/base-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssfonts/fonts-min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/themes/default/css/main.css" />
     <?php echo $this->headStyle(); ?>
+
+
+    <?php echo $this->headScript(); ?>
 
 </head>
 
 <body>
-    <div id="header">
-        <?php echo $this->layout()->header; ?>
+    <div id="wrapper">
+        <?php echo $this->render('partials/header.phtml'); ?>
+        
+        
+        <div id="top">
+            <?php echo $this->layout()->header; ?>
 
-    </div>
+        </div>
 
-    <div id="content">
-        <?php echo $this->layout()->content; ?>
+        <div id="content">
+            <?php echo $this->layout()->content; ?>
 
-    </div>
+        </div>
 
-    <div id="sidebar">
-        <?php echo $this->layout()->sidebar; ?>
+        <div id="sidebar">
+            <?php echo $this->layout()->sidebar; ?>
 
-    </div>
+        </div>
 
-    <div id="footer">
-        <?php echo $this->layout()->footer; ?>
+        <div id="bottom">
+            <?php echo $this->layout()->footer; ?>
 
+        </div>
+
+        <?php echo $this->render('partials/footer.phtml'); ?>
     </div>
 </body>
 </html>

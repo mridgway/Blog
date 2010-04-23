@@ -18,12 +18,15 @@ abstract class AbstractBlock
 
     public function __toString()
     {
-        return $this->render($this->_view);
+        return $this->render();
     }
 
-    public function setView($viewName)
+    public function setView(\Zend_View $view = null)
     {
-        $this->_view = $viewName;
+        if (null === $view) {
+            $view = new \Core\Model\View();
+        }
+        $this->_view = $view;
         return $this;
     }
 }

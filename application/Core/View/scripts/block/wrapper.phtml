@@ -1,4 +1,4 @@
-<div class="block-wrapper">
+<div <?php if ($this->id) : ?> id="<?php echo $this->id; ?>"<?php endif; ?>class="block-wrapper <?php if ($this->classes) echo $this->classes; ?>">
     <?php echo $this->content; ?>
     
 </div>

@@ -45,12 +45,12 @@ class Page
             $this->setLayout($layout);
         }
         foreach ($this->_containers AS $name => $blocks) {
-            uksort($blocks, function ($a, $b) {
-                return $a->weight < $b->weight;
-            });
+            array_merge($blocks);
             $this->_layout->{$name} = '';
             foreach ($blocks AS $block) {
-                $this->getBlockWrapper()->assign('content', (string)$block);
+                $this->getBlockWrapper()->assign('content', $block->render());
+                $this->getBlockWrapper()->assign('id', $block->getId());
+                $this->getBlockWrapper()->assign('classes', implode(' ', $block->getClasses()));
                 $this->_layout->{$name} .= $this->getBlockWrapper()->render($this->_blockViewName);
             }
         }
