@@ -4,6 +4,11 @@ namespace Core\Model;
 
 class AbstractModel
 {
+
+    /**
+     * @var Doctrine\ORM\EntityManager
+     */
+    private static $_em = null;
     
     public function __get ($name) {
         $method = 'get'.ucfirst($name);
@@ -42,6 +47,21 @@ class AbstractModel
         }
 
         throw new \Exception('Method `'.$name.'` does not exist.');
+    }
+
+    public static function setEntityManager($em)
+    {
+        self::$_em = $em;
+    }
+
+    public static function getEntityManager($em)
+    {
+        return $em;
+    }
+
+    public function getRepository()
+    {
+        return self::$_em->getRepository(get_class($this));
     }
 
 }
