@@ -7,37 +7,95 @@ class Page
     /**
      * @var Zend_Layout
      */
-    public $layout = null;
+    protected $_layout = null;
+
+    /**
+     * @var string
+     */
+    protected $_blockViewName = 'block/wrapper.phtml';
+
+    /**
+     * @var Zend_View
+     */
+    protected $_blockView = null;
 
     /**
      * @var array
      */
-    public $containers = array();
+    protected $_containers = array();
 
-    public function __construct($layout)
+    public function __construct($layout = null, $blockWrapper = null)
     {
-        if (is_string($layout)) {
-            $this->layout = new \Zend_Layout('layout');
-        } else if ($layout instanceof \Zend_Layout) {
-            $this->layout = $layout;
-        } else {
-            throw new \Exception('Invalid layout sent to page.');
-        }
-        
+        $this->setLayout($layout);
+        $this->setBlockWrapper($blockWrapper);
     }
 
     public function addBlock(\Core\Model\AbstractBlock $block, $container = 'content', $weight = null)
     {
         if (null === $weight) {
-            $this->containers[$container][] = $block;
+            $this->_containers[$container][] = $block;
         } else {
-            $this->containers[$content][$weight] = $block;
+            $this->_containers[$container][$weight] = $block;
         }
     }
 
-    public function render($layout)
+    public function render($layout = null)
     {
-        foreach
+        if (null !== $layout) {
+            $this->setLayout($layout);
+        }
+        foreach ($this->_containers AS $name => $blocks) {
+            uksort($blocks, function ($a, $b) {
+                return $a->weight < $b->weight;
+            });
+            $this->_layout->{$name} = '';
+            foreach ($blocks AS $block) {
+                $this->getBlockWrapper()->assign('content', (string)$block);
+                $this->_layout->{$name} .= $this->getBlockWrapper()->render($this->_blockViewName);
+            }
+        }
+        return $this->_layout->render($layout);
+    }
+
+    public function setLayout($layout = null)
+    {
+        if (is_string($layout)) {
+            $this->_layout->setLayout($layout);
+        } else if ($layout instanceof \Zend_Layout) {
+            $this->_layout = $layout;
+        } else {
+            $this->_layout = \Zend_Layout::startMvc();
+            $this->_layout->setLayoutPath(APPLICATION_ROOT . "/themes/default/layouts/scripts");
+            $this->_layout->disableLayout();
+        }
+
+        return $this;
+    }
+
+    public function getLayout()
+    {
+        return $this->_layout;
+    }
+
+    public function setBlockWrapper($name)
+    {
+        if (is_string($name)) {
+            $this->_blockViewName = $name;
+        }
+        return $this;
+    }
+
+    public function getBlockWrapper()
+    {
+        if (null === $this->_blockView) {
+            $this->_blockView = new View('Core');
+        }
+        return $this->_blockView;
+    }
+
+    public function __toString()
+    {
+        return $this->render();
     }
     
 }
