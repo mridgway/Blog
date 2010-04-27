@@ -31,15 +31,15 @@ class Article extends \Core\Model\AbstractModel
 
     /**
      * @var DateTime
-     * @Column(type="datetime", name="date", nullable="false")
+     * @Column(type="datetime", name="date", nullable="true")
      */
     protected $date;
 
-    public function __construct($title, $content = '')
+    public function __construct($title, $content = '', $date = null)
     {
         $this->setTitle($title);
         $this->setContent($content);
-        $this->setDate(new \DateTime());
+        $this->setDate($date);
     }
 
 }

@@ -19,4 +19,21 @@ class Article extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAllPublishedDesc($limit = null, $offset = null)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('a.date is not null');
+        $qb->orderBy('a.date', 'DESC');
+
+        $query = $qb->getQuery();
+        if (null !== $limit) {
+            $query->setMaxResults($limit);
+            if (null !== $offset) {
+                $query->setFirstResult($offset);
+            }
+        }
+
+        return $query->getResult();
+    }
 }

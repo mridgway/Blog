@@ -95,7 +95,7 @@ class Standard extends \Zend_Controller_Dispatcher_Standard
 
         $className = $this->formatControllerName($controllerName);
 
-        $module = $request->getModuleName();
+        $module = ucfirst($request->getModuleName());
         if ($this->isValidModule($module)) {
             $this->_curModule    = $module;
         } elseif ($this->isValidModule($this->_defaultModule)) {

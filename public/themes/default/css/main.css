@@ -1,9 +1,69 @@
+/*
 html {
     background-color: #0f0c0f;
     color: #afacaf;
 }
+*/
 
 body {
-    width: 1000px;
+    width: 75em;
     margin: 0 auto;
+}
+
+#wrapper {
+    margin: 1em;
+    border: 1px solid #ccc;
+    height: 100%;
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+}
+
+#header {
+    background-color: #ccc;
+    height: 75px;
+    color: #fff;
+}
+
+#main {
+    float: left;
+    width: 100%;
+    margin: 1em;
+    margin-right: -25em;
+    min-height: 1em;
+}
+
+#sidebar {
+    position: relative;
+    float: right;
+    width: 15em;
+    margin: 1em;
+    border-left: 1px solid #ddd;
+    min-height: 1em;
+}
+
+#footer {
+    clear: both;
+}
+
+/******************************************
+ * REUSABLE CLASSES
+ ******************************************/
+
+.clearBoth {
+    clear: both;
+}
+
+/******************************************
+ * BLOG ARTICLE
+ ******************************************/
+
+.article h2 {
+    margin-bottom: .1em;
+}
+
+.article .header-sub {
+    font-size: .9em;
+    color: #666;
 }

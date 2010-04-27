@@ -24,22 +24,26 @@
         
         
         <div id="top">
-            <?php echo $this->layout()->header; ?>
+            <?php echo $this->layout()->top; ?>
 
         </div>
 
-        <div id="content">
-            <?php echo $this->layout()->content; ?>
+        <div id="body">
+            <div id="main">
+                <div id="content">
+                    <?php echo $this->layout()->content; ?>
 
-        </div>
+                </div>
+            </div>
 
-        <div id="sidebar">
-            <?php echo $this->layout()->sidebar; ?>
+            <div id="sidebar">
+                <?php echo $this->layout()->sidebar; ?>
 
+            </div>
         </div>
 
         <div id="bottom">
-            <?php echo $this->layout()->footer; ?>
+            <?php echo $this->layout()->bottom; ?>
 
         </div>
 
