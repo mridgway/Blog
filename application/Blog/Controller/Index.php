@@ -25,4 +25,14 @@ class Index extends \Ridg\Controller\Action
 
         echo $page->render();
     }
+
+    public function viewAction()
+    {
+        echo 'Coming Soon';
+    }
+
+    public function archiveAction()
+    {
+        echo 'Coming Soon';
+    }
 }

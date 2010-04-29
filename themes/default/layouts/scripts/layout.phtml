@@ -13,7 +13,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/themes/default/css/main.css" />
     <?php echo $this->headStyle(); ?>
 
-
+    <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="/lib/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/lib/js/ckeditor/adapters/jquery.js"></script>
     <?php echo $this->headScript(); ?>
 
 </head>
@@ -46,8 +48,9 @@
             <?php echo $this->layout()->bottom; ?>
 
         </div>
-
         <?php echo $this->render('partials/footer.phtml'); ?>
+
+        
     </div>
 </body>
 </html>

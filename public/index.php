@@ -26,6 +26,13 @@ if (!defined('ZEND_PATH')) {
                                 . DIRECTORY_SEPARATOR . 'library'));
 }
 
+if (!defined('ZENDX_PATH')) {
+    define('ZENDX_PATH', realpath( APPLICATION_ROOT
+                                . DIRECTORY_SEPARATOR . 'vendor'
+                                . DIRECTORY_SEPARATOR . 'ZendX'
+                                . DIRECTORY_SEPARATOR . 'library'));
+}
+
 if (!defined('DOCTRINE_PATH')) {
     define('DOCTRINE_PATH', realpath( APPLICATION_ROOT
                                     . DIRECTORY_SEPARATOR . 'vendor'
@@ -49,6 +56,10 @@ $doctrineLoader = new \Doctrine\Common\ClassLoader('Ridg', APPLICATION_ROOT . DI
 $doctrineLoader->register();
 
 $zendLoader = new \Doctrine\Common\ClassLoader('Zend', ZEND_PATH);
+$zendLoader->setNamespaceSeparator('_');
+$zendLoader->register();
+
+$zendLoader = new \Doctrine\Common\ClassLoader('ZendX', ZENDX_PATH);
 $zendLoader->setNamespaceSeparator('_');
 $zendLoader->register();
 

@@ -49,6 +49,25 @@ class AbstractModel
         throw new \Exception('Method `'.$name.'` does not exist.');
     }
 
+    public function setter($variable)
+    {
+        if (property_exists($this, $variable)) {
+            $setter = 'set' . ucfirst($variable);
+            return function ($value) {
+                $this->$setter($value);
+            };
+        }
+    }
+
+    public function getter($variable) {
+        if (property_exists($this, $variable)) {
+            $getter = 'get' . ucfirst($variable);
+            return function ($value) {
+                $this->$setter($value);
+            };
+        }
+    }
+
     public static function setEntityManager($em)
     {
         self::$_em = $em;
