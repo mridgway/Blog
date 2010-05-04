@@ -14,4 +14,8 @@ class Action extends \Zend_Controller_Action
         parent::__construct($request, $response, $invokeArgs);
         $this->_em = \Zend_Registry::get('em');
     }
+
+    public function getEntityManager() {
+        return $this->_em;
+    }
 }

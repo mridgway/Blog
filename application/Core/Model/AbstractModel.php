@@ -2,7 +2,7 @@
 
 namespace Core\Model;
 
-class AbstractModel
+abstract class AbstractModel
 {
 
     /**
@@ -78,6 +78,9 @@ class AbstractModel
         return $em;
     }
 
+    /**
+     * @return Doctrine\ORM\EntityRepository
+     */
     public function getRepository()
     {
         return self::$_em->getRepository(get_class($this));

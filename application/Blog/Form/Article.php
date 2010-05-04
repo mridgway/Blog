@@ -17,12 +17,13 @@ class Article extends \Core\Form\AbstractForm
         $publish = new \Core\Form\Element\Checkbox('published');
         $publish->setLabel('Published');
 
-        $publishDate = new \Core\Form\Element\DatePicker('publishDate');
-        $publishDate->setLabel('Publish Date');
+        $date = new \Core\Form\Element\DatePicker('date');
+        $date->setLabel('Publish Date');
+        $date->addValidator(new \Zend_Validate_Date(array('format' => 'Y-m-d H:i:s')));
 
         $submit = new \Core\Form\Element\Submit('submit');
         $submit->setLabel('Submit');
         
-        $this->addElements(array($id, $title, $content, $publish, $publishDate, $submit));
+        $this->addElements(array($id, $title, $content, $publish, $date, $submit));
     }
 }

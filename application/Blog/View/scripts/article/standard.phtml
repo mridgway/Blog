@@ -1,4 +1,4 @@
-<h2><?php echo $this->content->getTitle(); ?></h2>
+<h2><a href="<?php $this->content->getUrl(); ?>"><?php echo $this->content->getTitle(); ?></a></h2>
 <p class="header-sub"><?php echo $this->content->getDate()->format('F j, Y'); ?></p>
 
 <p><?php echo $this->content->getContent(); ?></p>

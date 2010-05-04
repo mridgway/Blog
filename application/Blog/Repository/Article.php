@@ -23,7 +23,7 @@ class Article extends \Doctrine\ORM\EntityRepository
     public function findAllPublishedDesc($limit = null, $offset = null)
     {
         $qb = $this->createQueryBuilder('a');
-        $qb->where('a.date is not null');
+        $qb->where('a.published = 1');
         $qb->orderBy('a.date', 'DESC');
 
         $query = $qb->getQuery();

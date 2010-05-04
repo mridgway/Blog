@@ -31,7 +31,6 @@ class Install extends \Ridg\Controller\Action
 
     public function indexAction()
     {
-        $this->_tool->dropSchema($this->_classes);
         $this->_tool->createSchema($this->_classes);
     }
 }

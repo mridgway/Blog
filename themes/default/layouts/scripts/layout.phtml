@@ -10,44 +10,55 @@
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssreset/reset-min.css" />
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssbase/base-min.css" />
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssfonts/fonts-min.css" />
+    <link rel="stylesheet" type="text/css" href="/themes/default/css/960.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/themes/default/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/js/syntaxhighlight/styles/shCore.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/js/syntaxhighlight/styles/shThemeDefault.css" />
     <?php echo $this->headStyle(); ?>
 
-    <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="/lib/js/jquery/jquery-1.4.2.js"></script>
     <script type="text/javascript" src="/lib/js/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="/lib/js/ckeditor/adapters/jquery.js"></script>
+    <script type="text/javascript" src="/lib/js/syntaxhighlight/concat.js"></script>
     <?php echo $this->headScript(); ?>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
 
 </head>
 
 <body>
-    <div id="wrapper">
+    <div id="wrapper" class="container_16">
         <?php echo $this->render('partials/header.phtml'); ?>
         
         
-        <div id="top">
+        <div id="top" class="grid_16">
             <?php echo $this->layout()->top; ?>
 
         </div>
+        <div class="clear"></div>
 
-        <div id="body">
-            <div id="main">
+        <div id="body" class="grid_16">
+            <div id="main" class="grid_12 alpha">
                 <div id="content">
                     <?php echo $this->layout()->content; ?>
 
                 </div>
             </div>
 
-            <div id="sidebar">
+            <div id="sidebar" class="grid_4 omega">
                 <?php echo $this->layout()->sidebar; ?>
 
             </div>
         </div>
+        <div class="clear"></div>
 
-        <div id="bottom">
+        <div id="bottom" class="grid_16">
             <?php echo $this->layout()->bottom; ?>
 
         </div>
+        <div class="clear"></div>
         <?php echo $this->render('partials/footer.phtml'); ?>
 
         
