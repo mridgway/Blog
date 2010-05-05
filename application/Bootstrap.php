@@ -36,9 +36,20 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         return $em;
     }
 
+    public function _initAcl()
+    {
+        $acl = new \Zend_Acl();
+        \Zend_Registry::set('acl', $acl);
+        $acl->allow(null, null, 'view');
+        $acl->addRole('user');
+        return $acl;
+    }
+
     public function _initAuth()
     {
         $auth = \Zend_Auth::getInstance();
-        return $auth;
+
+        $storage = new \Ridg\Auth\Storage\Doctrine(\Zend_Registry::get('em'));
+        $auth->setStorage($storage);
     }
 }

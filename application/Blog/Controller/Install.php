@@ -6,11 +6,6 @@ class Install extends \Ridg\Controller\Action
 {
 
     /**
-     * @var Doctrine\ORM\EntityManager
-     */
-    protected $_em;
-
-    /**
      * @var \Doctrine\ORM\Tools\SchemaTool
      */
     protected $_tool;
@@ -22,15 +17,21 @@ class Install extends \Ridg\Controller\Action
 
     public function init()
     {
-        $this->_em = \Zend_Registry::get('em');
-        $this->_tool = new \Doctrine\ORM\Tools\SchemaTool($this->_em);
-        $this->_classes = array (
-            $this->_em->getClassMetadata('Blog\Model\Article')
+        $auth = \Zend_Auth::getInstance();
+        if (!$auth->hasIdentity() || !$auth->getIdentity()->isAllowed('blog:install')) {
+            header('Location: /login?redir=/blog/install');
+            return;
+        }
+        
+        $this->_tool = new \Doctrine\ORM\Tools\SchemaTool($this->getEntityManager());
+        $this->_classes = array(
+            $this->getEntityManager()->getClassMetadata('Blog\Model\Article')
         );
     }
 
     public function indexAction()
     {
         $this->_tool->createSchema($this->_classes);
+        header('Location: /');
     }
 }

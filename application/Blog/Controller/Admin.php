@@ -4,6 +4,14 @@ namespace Blog\Controller;
 
 class Admin extends \Ridg\Controller\Action
 {
+    public function init()
+    {
+        $auth = \Zend_Auth::getInstance();
+        if (!$auth->hasIdentity() || !$auth->getIdentity()->isAllowed('blog:admin')) {
+            throw new \Exception('Not allowed.');
+        }
+    }
+
     public function addAction()
     {
         $page = new \Core\Model\Page();

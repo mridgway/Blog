@@ -73,9 +73,12 @@ abstract class AbstractModel
         self::$_em = $em;
     }
 
-    public static function getEntityManager($em)
+    private static function getEntityManager()
     {
-        return $em;
+        if (null === self::$_em) {
+            self::setEntityManager(\Zend_Registry::get('em'));
+        }
+        return self::$_em;
     }
 
     /**
@@ -83,7 +86,7 @@ abstract class AbstractModel
      */
     public function getRepository()
     {
-        return self::$_em->getRepository(get_class($this));
+        return self::getEntityManager()->getRepository(get_class($this));
     }
 
 }

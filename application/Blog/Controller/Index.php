@@ -8,7 +8,7 @@ class Index extends \Ridg\Controller\Action
     {
         $page = new \Core\Model\Page();
 
-        $articles = $this->_em->getRepository('Blog\Model\Article')->findAllPublishedDesc(10, 0);
+        $articles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllPublishedDesc(10, 0);
 
         if (count($articles)) {
             foreach ($articles AS $article) {
@@ -28,6 +28,7 @@ class Index extends \Ridg\Controller\Action
 
     public function viewAction()
     {
+        die(var_dump($this->getRequest()->getParams()));
         echo 'Coming Soon';
     }
 

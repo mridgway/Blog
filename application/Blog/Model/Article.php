@@ -11,21 +11,20 @@ class Article extends \Core\Model\AbstractModel
 
     /**
      * @var integer
-     * @Id
-     * @Column(type="integer", name="article_id")
+     * @Id @Column(type="integer", name="article_id")
      * @GeneratedValue
      */
     protected $id;
 
     /**
      * @var string
-     * @Column(type="string", name="slug", nullable="false")
+     * @Column(type="string", name="slug", nullable="false", length="255", unique="true")
      */
     protected $slug;
 
     /**
      * @var string
-     * @Column(type="string", name="title", nullable="false")
+     * @Column(type="string", name="title", nullable="false", length="255")
      */
     protected $title;
 
@@ -56,7 +55,7 @@ class Article extends \Core\Model\AbstractModel
     public function __construct($title, $content = '', $date = null, $published = false)
     {
         $this->setTitle($title);
-        $this->setSlug(self::slug($title));
+        $this->setSlug($this->slug($title));
         $this->setContent($content);
         $this->setDate($date);
         $this->setPublished($published);
@@ -110,15 +109,12 @@ class Article extends \Core\Model\AbstractModel
     }
 
     /**
-     * Creates a URL friendly slug (NOT UNIQUE)
-     *
-     * @param string $str
+     * @param string $value
      * @return string
      */
-    public static function slug($str)
+    protected function slug($value)
     {
-        $str = strtolower(trim($str));
-        $str = preg_replace('/[^a-z0-9-]/', '-', $str);
-        return preg_replace('/-+/', "-", $str);
+        $filter = \Blog\Filter\Slug($this->getRepository(), 'findBySlug');
+        return $filter->filter(substr($value, 0, 255));
     }
 }

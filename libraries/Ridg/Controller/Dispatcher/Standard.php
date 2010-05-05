@@ -48,9 +48,18 @@ class Standard extends \Zend_Controller_Dispatcher_Standard
             return false;
         }
 
+        set_error_handler(function($errno, $errstr) {
+            echo $errstr;
+            throw new \Exception('File not found.');
+            return true;
+        }, E_ALL);
         try {
-            return $this->_autoloaders[$this->_curModule]->loadClass($className);
+            $isLoaded = $this->_autoloaders[$this->_curModule]->loadClass($className);
+            die('1');
+            return $isLoaded;
         } catch (\Exception $e) {
+            die('2');
+            restore_error_handler();
             return false;
         }
     }
