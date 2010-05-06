@@ -37,6 +37,23 @@ class Article extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function findAllUnPublishedDesc($limit = null, $offset = null)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb->where('a.published = 0');
+        $qb->orderBy('a.id', 'ASC');
+
+        $query = $qb->getQuery();
+        if (null !== $limit) {
+            $query->setMaxResults($limit);
+            if (null !== $offset) {
+                $query->setFirstResult($offset);
+            }
+        }
+
+        return $query->getResult();
+    }
+
     public function findBySlug($slug)
     {
         return $this->findOneBySlug($slug);

@@ -8,10 +8,10 @@ class Index extends \Ridg\Controller\Action
     {
         $page = new \Core\Model\Page();
 
-        $articles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllPublishedDesc(10, 0);
+        $publishedArticles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllPublishedDesc(10, 0);
 
-        if (count($articles)) {
-            foreach ($articles AS $article) {
+        if (count($publishedArticles)) {
+            foreach ($publishedArticles AS $article) {
                 $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/short.phtml');
                 $block->setContent($article);
                 $block->addClass('article');
@@ -23,12 +23,29 @@ class Index extends \Ridg\Controller\Action
             $page->addBlock($block);
         }
 
+        if (\Zend_Auth::getInstance()->hasIdentity()) {
+            $unpublishedArticles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllUnpublishedDesc(10, 0);
+
+            if (count($unpublishedArticles)) {
+                foreach ($unpublishedArticles AS $article) {
+                    $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/titleLink.phtml');
+                    $block->setContent($article);
+                    $block->addClass('article');
+                    $page->addBlock($block, 'sidebar');
+                }
+            } else {
+                $block = new \Core\Block\Standard();
+                $block->setContent('There are no unpublished articles.');
+                $page->addBlock($block, 'sidebar');
+            }
+        }
+
         echo $page->render();
     }
 
     public function viewAction()
     {
-        $page = new \Core\Model\Page();
+
 
         $slug = $this->getRequest()->getParam('slug');
         if (null === $slug) {
@@ -39,6 +56,12 @@ class Index extends \Ridg\Controller\Action
         if (null === $article) {
             throw new \Exception('Article not found.');
         }
+
+        if (!$article->getPublished() && !\Zend_Auth::getInstance()->hasIdentity()) {
+            throw new \Exception('Article not found.');
+        }
+        
+        $page = new \Core\Model\Page();
         
         $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/standard.phtml');
         $block->setContent($article);
