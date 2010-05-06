@@ -24,13 +24,20 @@ class Index extends \Ridg\Controller\Action
         }
 
         if (\Zend_Auth::getInstance()->hasIdentity()) {
+            
+            $block = new \Core\Block\Standard();
+            $block->setContent('<p><a href="/blog/admin/add/">Add New Article</a></p>');
+            $page->addBlock($block, 'sidebar');
+
             $unpublishedArticles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllUnpublishedDesc(10, 0);
 
+            $block = new \Core\Block\Standard();
+            $block->setContent('<h3>Unpublished Articles</h3>');
+            $page->addBlock($block, 'sidebar');
             if (count($unpublishedArticles)) {
                 foreach ($unpublishedArticles AS $article) {
                     $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/titleLink.phtml');
                     $block->setContent($article);
-                    $block->addClass('article');
                     $page->addBlock($block, 'sidebar');
                 }
             } else {
