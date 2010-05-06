@@ -107,7 +107,7 @@ class Standard extends \Zend_Controller_Dispatcher_Standard
             $this->_curModule    = $this->_defaultModule;
         } else {
             require_once 'Zend/Controller/Exception.php';
-            throw new Zend_Controller_Exception('No default module defined for this application');
+            throw new \Zend_Controller_Exception('No default module defined for this application');
         }
         return $this->_curModule . '\Controller\\' . $className;
     }

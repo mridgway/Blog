@@ -31,7 +31,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 
         \Zend_Registry::getInstance()->set('em', $em);
 
-        \Core\Model\AbstractModel::setEntityManager($em);
+        \Ridg\Model\AbstractModel::setEntityManager($em);
 
         return $em;
     }

@@ -63,9 +63,6 @@ $zendLoader = new \Doctrine\Common\ClassLoader('ZendX', ZENDX_PATH);
 $zendLoader->setNamespaceSeparator('_');
 $zendLoader->register();
 
-$zendLoader = new \Doctrine\Common\ClassLoader('Core', APPLICATION_PATH);
-$zendLoader->register();
-
 $application = new \Zend_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . DIRECTORY_SEPARATOR . 'application.ini'
