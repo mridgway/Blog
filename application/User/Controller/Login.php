@@ -23,12 +23,7 @@ class Login extends \Ridg\Controller\Action
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             if ($form->isValid($data)) {
-                $authAdapter = new \Ridg\Auth\Adapter\Identity($this->getEntityManager());
-                $authAdapter->setIdentity($data['identity'])
-                            ->setPassword($data['password']);
-                $authResult = $authAdapter->authenticate();
-                if ($authResult->isValid()) {
-                    \Zend_Auth::getInstance()->getStorage()->write($authResult->getIdentity());
+                if (\User\Service\User::login($data['identity'], $data['password'])) {
                     $redir = $this->getRequest()->has('redir') ? $this->getRequest()->getParam('redir') : '/';
                     header('Location: ' . $redir);
                     return;

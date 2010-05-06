@@ -63,7 +63,7 @@ class Admin extends \Ridg\Controller\Action
             if ($form->isValid($data)) {
                 \Blog\Service\Article::updateArticle($article, $data);
                 $this->getEntityManager()->flush();
-                header('Location: /');
+                header('Location: /view/' . $article->getSlug());
             }
         }
 

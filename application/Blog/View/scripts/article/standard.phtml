@@ -1,4 +1,9 @@
 <h2><?php echo $this->content->getTitle(); ?></h2>
 <p class="header-sub"><?php echo $this->content->getDate()->format('F j, Y'); ?></p>
+<?php if (\Zend_Auth::getInstance()->hasIdentity()) : ?>
+<div id="adminMenu" class="block">
+    <p><a href="/blog/admin/edit/<?php echo $this->content->getId(); ?>/">Edit Article</a></p>
+</div>
+<?php endif; ?>
 
 <p><?php echo $this->content->getContent(); ?></p>
