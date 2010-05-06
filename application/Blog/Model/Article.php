@@ -95,6 +95,16 @@ class Article extends \Core\Model\AbstractModel
     }
 
     /**
+     * Returns abbreviated content text
+     *
+     * @return string
+     */
+    public function getShortContent()
+    {
+        return $this->getContent();
+    }
+
+    /**
      * Returns the url to view the inidividual article
      *
      * @return string
@@ -102,10 +112,7 @@ class Article extends \Core\Model\AbstractModel
     public function getUrl()
     {
         $d = $this->getDate();
-        return '/view/' . $d->format('Y')
-             . '/' . $d->format('n')
-             . '/' . $d->format('j')
-             . '/' . $this->getSlug() . '/';
+        return '/view/' . $this->getSlug() . '/';
     }
 
     /**
@@ -114,7 +121,7 @@ class Article extends \Core\Model\AbstractModel
      */
     protected function slug($value)
     {
-        $filter = \Blog\Filter\Slug($this->getRepository(), 'findBySlug');
+        $filter = new \Blog\Filter\Slug($this->getRepository(), 'findBySlug');
         return $filter->filter(substr($value, 0, 255));
     }
 }

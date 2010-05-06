@@ -12,7 +12,7 @@ class Index extends \Ridg\Controller\Action
 
         if (count($articles)) {
             foreach ($articles AS $article) {
-                $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/standard.phtml');
+                $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/short.phtml');
                 $block->setContent($article);
                 $block->addClass('article');
                 $page->addBlock($block);
@@ -28,8 +28,24 @@ class Index extends \Ridg\Controller\Action
 
     public function viewAction()
     {
-        die(var_dump($this->getRequest()->getParams()));
-        echo 'Coming Soon';
+        $page = new \Core\Model\Page();
+
+        $slug = $this->getRequest()->getParam('slug');
+        if (null === $slug) {
+            throw new \Exception('Article not found.');
+        }
+
+        $article = $this->getEntityManager()->getRepository('Blog\Model\Article')->findOneBySlug($slug);
+        if (null === $article) {
+            throw new \Exception('Article not found.');
+        }
+        
+        $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/standard.phtml');
+        $block->setContent($article);
+        $block->addClass('article');
+        $page->addBlock($block);
+
+        echo $page->render();
     }
 
     public function archiveAction()

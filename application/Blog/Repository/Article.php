@@ -39,6 +39,6 @@ class Article extends \Doctrine\ORM\EntityRepository
 
     public function findBySlug($slug)
     {
-        return $this->getRepository()->findOneBySlug($slug);
+        return $this->findOneBySlug($slug);
     }
 }

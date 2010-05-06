@@ -20,7 +20,7 @@ class Slug implements \Zend_Filter_Interface
      * @param Object $object object to call the function on
      * @param string $function function to call to get duplicates
      */
-    public function __construct(Object $object, $function)
+    public function __construct($object, $function)
     {
         $this->_fetchObject = $object;
         $this->_fetchFunction = $function;
@@ -32,8 +32,8 @@ class Slug implements \Zend_Filter_Interface
      */
     public function filter($value, $suffix = '')
     {
-        $slug = self::slug($str) . $suffix;
-        $results = $this->_uniqueObject->{$this->_uniqueFunction}($slug);
+        $slug = self::sluggify($value) . $suffix;
+        $results = $this->_fetchObject->{$this->_fetchFunction}($slug);
         if (!is_null($results) && (is_object($results) || (is_array($results) && count($results) > 0))) {
             $suffix = ($suffix == '') ? 2 : ++$suffix;
             return $this->filter($value, $suffix);
@@ -47,7 +47,7 @@ class Slug implements \Zend_Filter_Interface
      * @param string $str
      * @return string
      */
-    public static function slug($str)
+    public static function sluggify($str)
     {
         $str = strtolower(trim($str));
         $str = preg_replace('/[^a-z0-9-]/', '-', $str);
