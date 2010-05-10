@@ -1,5 +1,10 @@
 
         <div id="header" class="grid_16">
-            <a href="/">Home</a>
+            <?php if (\Zend_Auth::getInstance()->hasIdentity()) : ?>
+            <div id="adminMenu" class="block-wrapper" style="float: right">
+                <p>Hello, <?php echo \Zend_Auth::getInstance()->getIdentity()->getUser()->getFirstName() ?>! <a href="/logout">Logout</a></p>
+            </div>
+            <?php endif; ?>
+            <h1><a href="/">The Blog of Michael Ridgway</a></h1><h2>or, where I try to explain the Ridg way of doing things</h2>
         </div>
         <div class="clear"></div>

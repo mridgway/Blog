@@ -11,6 +11,9 @@ class Article extends \Core\Form\AbstractForm
         $title = new \Core\Form\Element\Text('title');
         $title->setLabel('Title');
 
+        $desc = new \Core\Form\Element\Textarea('description');
+        $desc->setLabel('Description');
+
         $content = new \Core\Form\Element\Textarea('content');
         $content->setLabel('Content');
 
@@ -24,6 +27,6 @@ class Article extends \Core\Form\AbstractForm
         $submit = new \Core\Form\Element\Submit('submit');
         $submit->setLabel('Submit');
         
-        $this->addElements(array($id, $title, $content, $publish, $date, $submit));
+        $this->addElements(array($id, $title, $desc, $content, $publish, $date, $submit));
     }
 }

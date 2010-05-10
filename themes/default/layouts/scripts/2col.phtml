@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-us" />
+    <?php echo $this->headTitle('Blog'); ?>
+
+    
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssreset/reset-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssbase/base-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssfonts/fonts-min.css" />
+    <link rel="stylesheet" type="text/css" href="/themes/default/css/960.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/themes/default/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/js/syntaxhighlight/styles/shCore.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/lib/js/syntaxhighlight/styles/shThemeDefault.css" />
+    <?php echo $this->headStyle(); ?>
+
+    <link rel="alternate" type="application/rss+xml" title="The Ridg Way Blog" href="/rss" />
+
+    <script type="text/javascript" src="/lib/js/jquery/jquery-1.4.2.js"></script>
+    <?php if (\Zend_Auth::getInstance()->hasIdentity()) : ?>
+    <script type="text/javascript" src="/lib/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/lib/js/ckeditor/adapters/jquery.js"></script>
+    <?php endif; ?>
+    <script type="text/javascript" src="/lib/js/syntaxhighlight/concat.js"></script>
+    <?php echo $this->headScript(); ?>
+
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+
+</head>
+
+<body>
+    <div id="wrapper" class="container_16">
+        <?php echo $this->render('partials/header.phtml'); ?>
+        
+        
+        <div id="top" class="grid_16">
+            <?php echo $this->layout()->top; ?>
+
+        </div>
+        <div class="clear"></div>
+
+        <div id="body" class="grid_16">
+            <div id="main" class="grid_11 alpha">
+                <div id="content">
+                    <?php echo $this->layout()->content; ?>
+
+                </div>
+            </div>
+
+            <div id="sidebar" class="grid_5 omega">
+                <div id="sidebar-inner">
+                    <?php echo $this->layout()->sidebar; ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div id="bottom" class="grid_16">
+            <?php echo $this->layout()->bottom; ?>
+
+        </div>
+        <div class="clear"></div>
+        <?php echo $this->render('partials/footer.phtml'); ?>
+
+        
+    </div>
+    <script type="text/javascript">
+    //<![CDATA[
+    (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+        }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/theridgway/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+    //]]>
+    </script>
+</body>
+</html>

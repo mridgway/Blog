@@ -49,7 +49,7 @@ class Standard extends \Zend_Controller_Dispatcher_Standard
         }
 
         try {
-            if (!file_exists($this->_autoloaders[$this->_curModule]->getClassPath($className))) {
+            if (!file_exists($this->_getClassPath($className, $this->_autoloaders[$this->_curModule]))) {
                 throw new \Exception('File does not exist.');
             }
             $isLoaded = $this->_autoloaders[$this->_curModule]->loadClass($className);
@@ -57,6 +57,21 @@ class Standard extends \Zend_Controller_Dispatcher_Standard
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * A way to get the include file location since Doctrine's classLoader does not currently
+     * provide one.
+     *
+     * @param string $className
+     * @param ClassLoader $autoLoader
+     * @return string
+     */
+    protected function _getClassPath($className, \Doctrine\Common\ClassLoader $autoLoader)
+    {
+        return ($autoLoader->getIncludePath() !== null ? $autoLoader->getIncludePath() . DIRECTORY_SEPARATOR : '')
+               . str_replace($autoLoader->getNamespaceSeparator(), DIRECTORY_SEPARATOR, $className)
+               . $autoLoader->getFileExtension();
     }
 
     /**

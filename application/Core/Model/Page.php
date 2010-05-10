@@ -59,14 +59,13 @@ class Page
 
     public function setLayout($layout = null)
     {
+        $this->_layout = \Zend_Layout::startMvc();
+        $this->_layout->setLayoutPath(APPLICATION_ROOT . "/themes/default/layouts/scripts");
         if (is_string($layout)) {
             $this->_layout->setLayout($layout);
+            $this->_layout->disableLayout();
         } else if ($layout instanceof \Zend_Layout) {
             $this->_layout = $layout;
-        } else {
-            $this->_layout = \Zend_Layout::startMvc();
-            $this->_layout->setLayoutPath(APPLICATION_ROOT . "/themes/default/layouts/scripts");
-            $this->_layout->disableLayout();
         }
 
         return $this;

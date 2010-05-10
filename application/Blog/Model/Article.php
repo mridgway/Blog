@@ -30,6 +30,12 @@ class Article extends \Core\Model\AbstractModel
 
     /**
      * @var string
+     * @Column(type="string", name="description", nullable="false", length="1000")
+     */
+    protected $description;
+
+    /**
+     * @var string
      * @Column(type="text", name="content", nullable="false")
      */
     protected $content;
@@ -57,6 +63,7 @@ class Article extends \Core\Model\AbstractModel
         $this->setTitle($title);
         $this->setSlug($this->slug($title));
         $this->setContent($content);
+        $this->setDescription($content);
         $this->setDate($date);
         $this->setPublished($published);
     }
@@ -101,7 +108,7 @@ class Article extends \Core\Model\AbstractModel
      */
     public function getShortContent()
     {
-        return $this->getContent();
+        return $this->description ? $this->description : $this->content;
     }
 
     /**

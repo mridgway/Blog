@@ -6,7 +6,7 @@ class Index extends \Ridg\Controller\Action
 {
     public function indexAction()
     {
-        $page = new \Core\Model\Page();
+        $page = new \Core\Model\Page('2col');
 
         $publishedArticles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllPublishedDesc(10, 0);
 
@@ -24,7 +24,7 @@ class Index extends \Ridg\Controller\Action
         }
 
         if (\Zend_Auth::getInstance()->hasIdentity()) {
-            
+
             $block = new \Core\Block\Standard();
             $block->setContent('<p><a href="/blog/admin/add/">Add New Article</a></p>');
             $page->addBlock($block, 'sidebar');
@@ -42,12 +42,41 @@ class Index extends \Ridg\Controller\Action
                 }
             } else {
                 $block = new \Core\Block\Standard();
-                $block->setContent('There are no unpublished articles.');
+                $block->setContent('There are no unpublished articles. <hr/>');
                 $page->addBlock($block, 'sidebar');
             }
         }
 
+        $block = new \Core\Block\Standard(new \Core\Model\View('Core'), 'static/shortbio.phtml');
+        $block->addClass('article');
+        $page->addBlock($block, 'sidebar');
+
         echo $page->render();
+    }
+
+    public function rssAction()
+    {
+        $publishedArticles = $this->getEntityManager()->getRepository('Blog\Model\Article')->findAllPublishedDesc(10, 0);
+
+        $entries = array();
+        foreach ($publishedArticles AS $article) {
+            $entries[] = array(
+                'title' => $article->getTitle(),
+                'link' => 'http://' . $_SERVER['HTTP_HOST'] . $article->getURL(),
+                'description' => $article->getContent(),
+                'pubDate' => $article->getDate()->format(DATE_RFC822)
+            );
+        }
+
+        $rss = array(
+            'title' => 'The Ridg Way Blog',
+            'link' => $_SERVER['HTTP_HOST'],
+            'charset' => 'ISO-8859-1',
+            'entries' => $entries
+        );
+
+        $feed = \Zend_Feed::importArray($rss, 'rss');
+        echo $feed->send();
     }
 
     public function viewAction()
@@ -68,12 +97,15 @@ class Index extends \Ridg\Controller\Action
             throw new \Exception('Article not found.');
         }
         
-        $page = new \Core\Model\Page();
+        $page = new \Core\Model\Page('2col');
         
         $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/standard.phtml');
         $block->setContent($article);
         $block->addClass('article');
         $page->addBlock($block);
+
+        $block = new \Core\Block\Standard(new \Core\Model\View('Core'), 'static/returnhome.phtml');
+        $page->addBlock($block, 'sidebar');
 
         echo $page->render();
     }

@@ -33,6 +33,10 @@ class Article extends \Core\Service\AbstractService
             $article->setPublished(true);
         }
 
+        if (array_key_exists('description', $data)) {
+            $article->setDescription($data['description']);
+        }
+
         return $article;
     }
 
@@ -40,6 +44,10 @@ class Article extends \Core\Service\AbstractService
     {
         if (array_key_exists('title', $data)) {
             $article->setTitle($data['title']);
+        }
+
+        if (array_key_exists('description', $data)) {
+            $article->setDescription($data['description']);
         }
 
         if (array_key_exists('content', $data)) {

@@ -14,7 +14,7 @@ class Admin extends \Ridg\Controller\Action
 
     public function addAction()
     {
-        $page = new \Core\Model\Page();
+        $page = new \Core\Model\Page('2col');
 
         $form = new \Blog\Form\Article();
         $form->setAction('/blog/admin/add/');
@@ -45,7 +45,7 @@ class Admin extends \Ridg\Controller\Action
             throw new \Exception('Article invalid.');
         }
         
-        $page = new \Core\Model\Page();
+        $page = new \Core\Model\Page('2col');
 
         $form = new \Blog\Form\Article();
         $form->setView(new \Zend_View());
@@ -53,6 +53,7 @@ class Admin extends \Ridg\Controller\Action
         $populate = array(
             'id' => $article->getId(),
             'title' => $article->getTitle(),
+            'description' => $article->getDescription(),
             'content' => $article->getContent(),
             'date' => $article->getDate()->format('Y-m-d H:i:s'),
             'published' => $article->getPublished()

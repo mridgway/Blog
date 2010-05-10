@@ -16,9 +16,13 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/lib/js/syntaxhighlight/styles/shThemeDefault.css" />
     <?php echo $this->headStyle(); ?>
 
+    <link rel="alternate" type="application/rss+xml" title="The Ridg Way Blog" href="/rss" />
+
     <script type="text/javascript" src="/lib/js/jquery/jquery-1.4.2.js"></script>
+    <?php if (\Zend_Auth::getInstance()->hasIdentity()) : ?>
     <script type="text/javascript" src="/lib/js/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="/lib/js/ckeditor/adapters/jquery.js"></script>
+    <?php endif; ?>
     <script type="text/javascript" src="/lib/js/syntaxhighlight/concat.js"></script>
     <?php echo $this->headScript(); ?>
 
@@ -40,21 +44,11 @@
         <div class="clear"></div>
 
         <div id="body" class="grid_16">
-            <div id="main" class="grid_12 alpha">
+            <div id="main" class="grid_16 alpha">
                 <div id="content">
                     <?php echo $this->layout()->content; ?>
 
                 </div>
-            </div>
-
-            <div id="sidebar" class="grid_4 omega">
-                <?php if (\Zend_Auth::getInstance()->hasIdentity()) : ?>
-                <div id="adminMenu" class="block">
-                    <p>Hello, <?php echo \Zend_Auth::getInstance()->getIdentity()->getUser()->getFirstName() ?>! <a href="/logout">Logout</a></p>
-                </div>
-                <?php endif; ?>
-                <?php echo $this->layout()->sidebar; ?>
-
             </div>
         </div>
         <div class="clear"></div>
