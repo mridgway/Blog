@@ -55,7 +55,7 @@ class Install extends \Ridg\Controller\Action
             }
         }
 
-        $page = new \Core\Model\Page();
+        $page = new \Core\Model\Page('2col');
         $block = new \Core\Block\Standard(new \Core\Model\View('Core'), 'block/simple.phtml');
         $block->setContent($form);
         $page->addBlock($block, 'content', 0);

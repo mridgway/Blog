@@ -33,7 +33,7 @@ class Login extends \Ridg\Controller\Action
             }
         }
 
-        $page = new \Core\Model\Page();
+        $page = new \Core\Model\Page('2col');
 
         $block = new \Core\Block\Standard(new \Core\Model\View('User'), 'login/login.phtml');
         $content->form = $form;

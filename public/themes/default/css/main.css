@@ -27,6 +27,8 @@ body {
 
     #header h1 {
         float: left;
+        height: 1.7em;
+        line-height: 1.7em;
     }
 
         #header h1 a {
@@ -38,7 +40,7 @@ body {
 
     #header h2 {
         float: left;
-        margin-top: 1.4em;
+        margin-top: 1.6em;
         color: #777;
     }
 
