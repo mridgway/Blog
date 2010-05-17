@@ -18,19 +18,19 @@ class Article extends \Core\Model\AbstractModel
 
     /**
      * @var string
-     * @Column(type="string", name="slug", nullable="false", length="255", unique="true")
+     * @Column(type="string", name="slug", length="255", nullable="false", unique="true")
      */
     protected $slug;
 
     /**
      * @var string
-     * @Column(type="string", name="title", nullable="false", length="255")
+     * @Column(type="string", name="title", length="255", nullable="false")
      */
     protected $title;
 
     /**
      * @var string
-     * @Column(type="string", name="description", nullable="false", length="1000")
+     * @Column(type="string", name="description", length="1000", nullable="false")
      */
     protected $description;
 
