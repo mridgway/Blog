@@ -21,7 +21,8 @@ body {
 }
 
 #header {
-    background-color: #ccc;
+    background-color: #efefef;
+    border: 1px solid #ddd;
 }
 
     #header h1 {

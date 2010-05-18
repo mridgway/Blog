@@ -4,10 +4,11 @@ $(document).ready(function () {
         [
             ['Source'], ['Code'],
             ['Styles', 'Format', 'Font', 'FontSize'],
+            '/',
             ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
             ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
             ['TextColor','BGColor'],
-            ['Link','Unlink','Anchor']
+            ['Image', 'Link','Unlink','Anchor']
         ];
     RTEconfig.extraPlugins = 'syntaxhighlight';
     RTEconfig.width = '100%';

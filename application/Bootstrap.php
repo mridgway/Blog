@@ -16,7 +16,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 
     public function _initDoctrine()
     {
-        $cache = new \Doctrine\Common\Cache\ArrayCache();
+        $cache = $this->_getCacheImpl();
         $config = new \Doctrine\ORM\Configuration();
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
@@ -51,5 +51,29 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
 
         $storage = new \Ridg\Auth\Storage\Doctrine(\Zend_Registry::get('em'));
         $auth->setStorage($storage);
+    }
+
+    public function _getCacheImpl()
+    {
+        $cache = null;
+        if(class_exists('Memcache')) {
+            $memcache = new \Memcache;
+            if (@$memcache->connect('127.0.0.1')) {
+                $cache = new \Doctrine\Common\Cache\MemcacheCache();
+                $cache->setMemcache($memcache);
+                $cache->setNamespace('blog');
+
+                return $cache;
+            }
+        }
+
+        if (null === $cache && extension_loaded('apc')) {
+            $cache = new \Doctrine\Common\Cache\ApcCache();
+        } else {
+            $cache = new \Doctrine\Common\Cache\ArrayCache();
+        }
+
+        $cache->setNamespace('modocms');
+        return $cache;
     }
 }
