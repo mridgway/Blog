@@ -37,7 +37,8 @@ if (!defined('DOCTRINE_PATH')) {
     define('DOCTRINE_PATH', realpath( APPLICATION_ROOT
                                     . DIRECTORY_SEPARATOR . 'vendor'
                                     . DIRECTORY_SEPARATOR . 'Doctrine2'
-                                    . DIRECTORY_SEPARATOR . 'lib'));
+                                    . DIRECTORY_SEPARATOR . 'build'
+                                    . DIRECTORY_SEPARATOR . 'orm'));
 }
 
 set_include_path( APPLICATION_PATH . PATH_SEPARATOR

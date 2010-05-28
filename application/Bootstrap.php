@@ -20,6 +20,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         $config = new \Doctrine\ORM\Configuration();
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
+        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver());
         //$config->setSqlLogger(new \Doctrine\DBAL\Logging\EchoSqlLogger);
         $config->setProxyDir(\APPLICATION_ROOT . \DIRECTORY_SEPARATOR . 'data' . \DIRECTORY_SEPARATOR . 'proxies');
         $config->setProxyNamespace('Proxy');
