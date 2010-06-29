@@ -8,6 +8,9 @@ class Article extends \Core\Form\AbstractForm
     {
         $id = new \Core\Form\Element\Hidden('id');
 
+        $slug = new \Core\Form\Element\Text('slug');
+        $slug->setLabel('Slug');
+
         $title = new \Core\Form\Element\Text('title');
         $title->setLabel('Title');
 
@@ -27,6 +30,6 @@ class Article extends \Core\Form\AbstractForm
         $submit = new \Core\Form\Element\Submit('submit');
         $submit->setLabel('Submit');
         
-        $this->addElements(array($id, $title, $desc, $content, $publish, $date, $submit));
+        $this->addElements(array($id, $slug, $title, $desc, $content, $publish, $date, $submit));
     }
 }

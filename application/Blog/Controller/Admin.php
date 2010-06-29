@@ -17,6 +17,7 @@ class Admin extends \Ridg\Controller\Action
         $page = new \Core\Model\Page('2col');
 
         $form = new \Blog\Form\Article();
+        $form->removeElement('slug');
         $form->setAction('/blog/admin/add/');
         $form->setView(new \Zend_View());
 
@@ -52,6 +53,7 @@ class Admin extends \Ridg\Controller\Action
 
         $populate = array(
             'id' => $article->getId(),
+            'slug' => $article->getSlug(),
             'title' => $article->getTitle(),
             'description' => $article->getDescription(),
             'content' => $article->getContent(),

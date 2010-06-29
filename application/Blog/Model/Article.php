@@ -61,7 +61,6 @@ class Article extends \Core\Model\AbstractModel
     public function __construct($title, $content = '', $date = null, $published = false)
     {
         $this->setTitle($title);
-        $this->setSlug($this->slug($title));
         $this->setContent($content);
         $this->setDescription($content);
         $this->setDate($date);
@@ -75,6 +74,9 @@ class Article extends \Core\Model\AbstractModel
     public function setTitle($title)
     {
         $this->title = $title;
+        if (!$this->slug) {
+            $this->setSlug($this->slug($title));
+        }
         return $this;
     }
 

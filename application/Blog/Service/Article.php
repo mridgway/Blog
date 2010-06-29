@@ -42,6 +42,10 @@ class Article extends \Core\Service\AbstractService
 
     public static function updateArticle(\Blog\Model\Article $article, array $data)
     {
+        if (array_key_exists('slug', $data)) {
+            $article->setSlug($data['slug']);
+        }
+
         if (array_key_exists('title', $data)) {
             $article->setTitle($data['title']);
         }
