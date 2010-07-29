@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1); 
-error_reporting(-1);
 
 if (!defined('APPLICATION_PATH')) {
     define('APPLICATION_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'application'));
@@ -33,6 +31,12 @@ if (!defined('ZENDX_PATH')) {
                                 . DIRECTORY_SEPARATOR . 'library'));
 }
 
+if (!defined('LIBRARY_PATH')) {
+    define('LIBRARY_PATH', realpath( APPLICATION_ROOT
+                                . DIRECTORY_SEPARATOR . 'libraries'));
+}
+
+/*
 if (!defined('DOCTRINE_PATH')) {
     define('DOCTRINE_PATH', realpath( APPLICATION_ROOT
                                     . DIRECTORY_SEPARATOR . 'vendor'
@@ -40,17 +44,17 @@ if (!defined('DOCTRINE_PATH')) {
                                     . DIRECTORY_SEPARATOR . 'build'
                                     . DIRECTORY_SEPARATOR . 'orm'));
 }
+ */
 
 set_include_path( APPLICATION_PATH . PATH_SEPARATOR
                 . APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries' . PATH_SEPARATOR
                 . ZEND_PATH . PATH_SEPARATOR
-                . DOCTRINE_PATH . PATH_SEPARATOR
                 . get_include_path()
                 );
 
 require_once('Doctrine/Common/ClassLoader.php');
 
-$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', DOCTRINE_PATH);
+$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', LIBRARY_PATH);
 $doctrineLoader->register();
 
 $doctrineLoader = new \Doctrine\Common\ClassLoader('Ridg', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
