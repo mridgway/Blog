@@ -30,7 +30,7 @@ class Article extends \Core\Model\AbstractModel
 
     /**
      * @var string
-     * @Column(type="string", name="description", length="1000", nullable="false")
+     * @Column(type="string", name="description", length="3000", nullable="false")
      */
     protected $description;
 

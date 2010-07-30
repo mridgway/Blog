@@ -1,3 +1,4 @@
+<?php $this->headTitle()->prepend($this->content->getTitle() . ' on '); ?>
 <h2><?php echo $this->content->getTitle(); ?></h2>
 <p class="header-sub"><?php echo $this->content->getDate()->format('F j, Y'); ?></p>
 <?php if (\Zend_Auth::getInstance()->hasIdentity()) : ?>

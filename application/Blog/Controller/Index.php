@@ -81,8 +81,6 @@ class Index extends \Ridg\Controller\Action
 
     public function viewAction()
     {
-
-
         $slug = $this->getRequest()->getParam('slug');
         if (null === $slug) {
             throw new \Exception('Article not found.');
@@ -98,7 +96,7 @@ class Index extends \Ridg\Controller\Action
         }
         
         $page = new \Core\Model\Page('2col');
-        
+
         $block = new \Core\Block\Standard(new \Core\Model\View('Blog'), 'article/standard.phtml');
         $block->setContent($article);
         $block->addClass('article');
