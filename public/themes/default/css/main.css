@@ -140,9 +140,9 @@ form {
     }
 
     .article .syntaxhighlighter {
-        width: 75% !important;
-        margin: 0 auto !important;
-        font-size: .8em !important;
+        width: 95% !important;
+        margin: 0 auto 1em auto !important;
+        font-size: .9em !important;
     }
 
     .article hr {
