@@ -121,7 +121,7 @@ class Article extends \Core\Model\AbstractModel
     public function getUrl()
     {
         $d = $this->getDate();
-        return '/view/' . $this->getSlug() . '/';
+        return '/article/' . $this->getSlug() . '/';
     }
 
     /**
