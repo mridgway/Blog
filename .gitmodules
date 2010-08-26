@@ -1,12 +1,3 @@
-[submodule "vendor/Zend"]
-	path = vendor/Zend
-	url = git://github.com/tjohns/zf.git
-[submodule "vendor/symfony"]
-	path = vendor/symfony
-	url = git://github.com/symfony/symfony.git
 [submodule "vendor/Doctrine2"]
 	path = vendor/Doctrine2
 	url = git://github.com/doctrine/doctrine2.git
-[submodule "vendor/ZendX"]
-	path = vendor/ZendX
-	url = git://github.com/bkw/ZendX.git
