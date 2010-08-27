@@ -1,9 +1,8 @@
 <?php
 
-/**
- * @todo make these bootstraps 5.3 namespaced
- */
-class User_Bootstrap extends \Zend_Application_Module_Bootstrap
+namespace User;
+
+class Bootstrap extends \Zend_Application_Module_Bootstrap
 {
     public function _initRoutes()
     {

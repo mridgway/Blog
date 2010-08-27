@@ -1,2 +1,6 @@
 nbproject/private
 data/proxies
+libraries/Zend
+libraries/Doctrine
+libraries/ZendX/Application53
+libraries/ZendX/Doctrine2

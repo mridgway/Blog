@@ -17,58 +17,18 @@ if (!defined('APPLICATION_ENV')) {
     define('APPLICATION_ENV', $env);
 }
 
-if (!defined('ZEND_PATH')) {
-    define('ZEND_PATH', realpath( APPLICATION_ROOT
-                                . DIRECTORY_SEPARATOR . 'vendor'
-                                . DIRECTORY_SEPARATOR . 'Zend'
-                                . DIRECTORY_SEPARATOR . 'library'));
-}
-
-if (!defined('ZENDX_PATH')) {
-    define('ZENDX_PATH', realpath( APPLICATION_ROOT
-                                . DIRECTORY_SEPARATOR . 'vendor'
-                                . DIRECTORY_SEPARATOR . 'ZendX'
-                                . DIRECTORY_SEPARATOR . 'library'));
-}
-
 if (!defined('LIBRARY_PATH')) {
     define('LIBRARY_PATH', realpath( APPLICATION_ROOT
                                 . DIRECTORY_SEPARATOR . 'libraries'));
 }
 
-/*
-if (!defined('DOCTRINE_PATH')) {
-    define('DOCTRINE_PATH', realpath( APPLICATION_ROOT
-                                    . DIRECTORY_SEPARATOR . 'vendor'
-                                    . DIRECTORY_SEPARATOR . 'Doctrine2'
-                                    . DIRECTORY_SEPARATOR . 'build'
-                                    . DIRECTORY_SEPARATOR . 'orm'));
-}
- */
-
 set_include_path( APPLICATION_PATH . PATH_SEPARATOR
-                . APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries' . PATH_SEPARATOR
-                . ZEND_PATH . PATH_SEPARATOR
+                . LIBRARY_PATH . PATH_SEPARATOR
                 . get_include_path()
                 );
 
-require_once('Doctrine/Common/ClassLoader.php');
-
-$doctrineLoader = new \Doctrine\Common\ClassLoader('Doctrine', LIBRARY_PATH);
-$doctrineLoader->register();
-
-$doctrineLoader = new \Doctrine\Common\ClassLoader('Ridg', APPLICATION_ROOT . DIRECTORY_SEPARATOR . 'libraries');
-$doctrineLoader->register();
-
-$zendLoader = new \Doctrine\Common\ClassLoader('Zend', ZEND_PATH);
-$zendLoader->setNamespaceSeparator('_');
-$zendLoader->register();
-
-$zendLoader = new \Doctrine\Common\ClassLoader('ZendX', ZENDX_PATH);
-$zendLoader->setNamespaceSeparator('_');
-$zendLoader->register();
-
-$application = new \Zend_Application(
+require('ZendX/Application53/Application.php');
+$application = new \ZendX\Application53\Application(
     APPLICATION_ENV,
     APPLICATION_PATH . DIRECTORY_SEPARATOR . 'application.ini'
 );

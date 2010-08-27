@@ -1,3 +1,12 @@
 [submodule "vendor/Doctrine2"]
 	path = vendor/Doctrine2
 	url = git://github.com/doctrine/doctrine2.git
+[submodule "vendor/ZendFramework"]
+	path = vendor/ZendFramework
+	url = git@github.com:mridgway/Zend-Framework-1.10-Mirror.git
+[submodule "vendor/ZendX_Doctrine2"]
+	path = vendor/ZendX_Doctrine2
+	url = git@github.com:mridgway/ZendX_Doctrine2.git
+[submodule "vendor/ZendX_Application53"]
+	path = vendor/ZendX_Application53
+	url = git@github.com:mridgway/ZendX_Application53.git

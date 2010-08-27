@@ -1,17 +1,11 @@
 <?php
 
-/**
- * @todo make autoloader for modules automated
- */
-class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
+class Bootstrap extends \ZendX\Application53\Application\Bootstrap
 {
 
-    public function _initDispatcher()
+    public function _initCoreAutoloader()
     {
-        $dispatcher = new \Ridg\Controller\Dispatcher\Standard();
-        \Zend_Controller_Front::getInstance()->setDispatcher($dispatcher);
-        \Zend_Controller_Front::getInstance()->setModuleControllerDirectoryName('Controller');
-        return $dispatcher;
+        \Zend_Loader_Autoloader::getInstance()->registerNamespace('Core');
     }
 
     public function _initDoctrine()
