@@ -18,4 +18,6 @@ rm -Rf libraries/ZendX/Application53 libraries/ZendX/Doctrine2
 cp -R vendor/ZendX_Application53/lib/ZendX/Application53 libraries/ZendX
 cp -R vendor/ZendX_Doctrine2/lib/ZendX/Doctrine2 libraries/ZendX
 
+mkdir data
+mkdir data/proxies
 chmod -R 777 data
