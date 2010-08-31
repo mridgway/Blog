@@ -21,10 +21,12 @@ class AdminController extends \ZendX\Application53\Controller\Action
         $form->setAction('/blog/admin/add/');
         $form->setView(new \Zend_View());
 
+        $mediator = new \Blog\Form\Article\Mediator($form, 'Blog\Model\Article');
+
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             if ($form->isValid($data)) {
-                $article = \Blog\Service\Article::createArticle($data);
+                $article = $mediator->createArticle($data);
                 \Zend_Registry::get('em')->persist($article);
                 \Zend_Registry::get('em')->flush();
                 header('Location: /');

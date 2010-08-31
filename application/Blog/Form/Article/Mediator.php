@@ -34,15 +34,15 @@ class Mediator extends \ZendX\Doctrine2\FormMediator
      * @param array $data
      * @return Blog\Model\Article
      */
-    public static function createArticle(array $data)
+    public function createArticle(array $data)
     {
         if (!array_key_exists('title', $data)) {
             throw new \Exception('Title must be set.');
         }
 
-        $article = new \Blog\Model\Article($data['title']);
+        $this->_instance = new \Blog\Model\Article($data['title']);
         $this->setData($data);
 
-        return $article;
+        return $this->_instance;
     }
 }
