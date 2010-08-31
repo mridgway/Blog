@@ -2,7 +2,7 @@
 
 namespace Core\Form\Element;
 
-class DatePicker extends Text
+class DateTime extends Text
 {
     /**
      * {@inheritdoc}
@@ -15,6 +15,7 @@ class DatePicker extends Text
     {
         parent::init();
 
-        $this->setAttrib('class', 'field datepicker');
+        $this->setAttrib('class', 'field datetime');
+        $this->addValidator(new \Zend_Validate_Date());
     }
 }

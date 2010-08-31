@@ -16,7 +16,7 @@ class AdminController extends \ZendX\Application53\Controller\Action
     {
         $page = new \Core\Model\Page('2col');
 
-        $form = new \Blog\Form\Article();
+        $form = new \Blog\Form\Article\Form();
         $form->removeElement('slug');
         $form->setAction('/blog/admin/add/');
         $form->setView(new \Zend_View());
@@ -48,25 +48,17 @@ class AdminController extends \ZendX\Application53\Controller\Action
         
         $page = new \Core\Model\Page('2col');
 
-        $form = new \Blog\Form\Article();
+        $form = new \Blog\Form\Article\Form();
         $form->setView(new \Zend_View());
 
-        $populate = array(
-            'id' => $article->getId(),
-            'slug' => $article->getSlug(),
-            'title' => $article->getTitle(),
-            'description' => $article->getDescription(),
-            'content' => $article->getContent(),
-            'date' => $article->getDate()->format('Y-m-d H:i:s'),
-            'published' => $article->getPublished()
-        );
-        $form->populate($populate);
+        $mediator = new \Blog\Form\Article\Mediator($form, $article);
+        $mediator->populate();
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            if ($form->isValid($data)) {
-                \Blog\Service\Article::updateArticle($article, $data);
+            if ($mediator->isValid($data)) {
+                $mediator->transferValues();
                 \Zend_Registry::get('em')->flush();
-                header('Location: /view/' . $article->getSlug());
+                header('Location: /article/' . $article->getSlug());
             }
         }
 
