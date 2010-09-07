@@ -249,12 +249,13 @@ class ClassMetadataFactory
                 $class->setVersionField($parent->versionField);
                 $class->setDiscriminatorMap($parent->discriminatorMap);
                 $class->setLifecycleCallbacks($parent->lifecycleCallbacks);
+                $class->setChangeTrackingPolicy($parent->changeTrackingPolicy);
             }
 
             // Invoke driver
             try {
                 $this->_driver->loadMetadataForClass($className, $class);
-            } catch(ReflectionException $e) {
+            } catch (ReflectionException $e) {
                 throw MappingException::reflectionFailure($className, $e);
             }
 
@@ -313,7 +314,7 @@ class ClassMetadataFactory
     {
         return new ClassMetadata($className);
     }
-    
+
     /**
      * Adds inherited fields to the subclass mapping.
      *
@@ -345,14 +346,14 @@ class ClassMetadataFactory
     private function _addInheritedRelations(ClassMetadata $subClass, ClassMetadata $parentClass)
     {
         foreach ($parentClass->associationMappings as $field => $mapping) {
-            $subclassMapping = clone $mapping;
-            if ( ! isset($mapping->inherited) && ! $parentClass->isMappedSuperclass) {
-                $subclassMapping->inherited = $parentClass->name;
+            //$subclassMapping = $mapping;
+            if ( ! isset($mapping['inherited']) && ! $parentClass->isMappedSuperclass) {
+                $mapping['inherited'] = $parentClass->name;
             }
-            if ( ! isset($mapping->declared)) {
-                $subclassMapping->declared = $parentClass->name;
+            if ( ! isset($mapping['declared'])) {
+                $mapping['declared'] = $parentClass->name;
             }
-            $subClass->addInheritedAssociationMapping($subclassMapping);
+            $subClass->addInheritedAssociationMapping($mapping);
         }
     }
 
@@ -392,7 +393,7 @@ class ClassMetadataFactory
                 if ( ! $definition) {
                     $sequenceName = $class->getTableName() . '_' . $class->getSingleIdentifierColumnName() . '_seq';
                     $definition['sequenceName'] = $this->_targetPlatform->fixSchemaElementName($sequenceName);
-                    $definition['allocationSize'] = 10;
+                    $definition['allocationSize'] = 1;
                     $definition['initialValue'] = 1;
                     $class->setSequenceGeneratorDefinition($definition);
                 }

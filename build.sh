@@ -6,12 +6,12 @@ git submodule init
 git submodule update
 cp build.properties.dev build.properties
 phing
-rm _Rf libraries/Doctrine2
-cp -R build/orm ../../libraries/Doctrine2
+rm _Rf libraries/Doctrine
+cp -R build/orm/Doctrine ../../libraries/
 cd ../..
 
 rm -Rf libraries/Zend
-cp -R vendor/ZendFramework/library libraries
+cp -R vendor/ZendFramework/library/Zend libraries
 
 mkdir libraries/ZendX
 rm -Rf libraries/ZendX/Application53 libraries/ZendX/Doctrine2

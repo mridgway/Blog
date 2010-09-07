@@ -61,47 +61,52 @@ class Lexer extends \Doctrine\Common\Lexer
     const T_BETWEEN             = 107;
     const T_BOTH                = 108;
     const T_BY                  = 109;
-    const T_COUNT               = 110;
-    const T_DELETE              = 111;
-    const T_DESC                = 112;
-    const T_DISTINCT            = 113;
-    const T_EMPTY               = 114;
-    const T_ESCAPE              = 115;
-    const T_EXISTS              = 116;
-    const T_FALSE               = 117;
-    const T_FROM                = 118;
-    const T_GROUP               = 119;
-    const T_HAVING              = 120;
-    const T_IN                  = 121;
-    const T_INDEX               = 122;
-    const T_INNER               = 123;
-    const T_IS                  = 124;
-    const T_JOIN                = 125;
-    const T_LEADING             = 126;
-    const T_LEFT                = 127;
-    const T_LIKE                = 128;
-    const T_MAX                 = 129;
-    const T_MEMBER              = 130;
-    const T_MIN                 = 131;
-    const T_NOT                 = 132;
-    const T_NULL                = 133;
-    const T_OF                  = 134;
-    const T_OR                  = 135;
-    const T_ORDER               = 136;
-    const T_OUTER               = 137;
-    const T_SELECT              = 138;
-    const T_SET                 = 139;
-    const T_SIZE                = 140;
-    const T_SOME                = 141;
-    const T_SUM                 = 142;
-    const T_TRAILING            = 143;
-    const T_TRUE                = 144;
-    const T_UPDATE              = 145;
-    const T_WHERE               = 146;
-    const T_WITH                = 147;
-    const T_PARTIAL             = 148;
-    const T_MOD                 = 149;
-
+    const T_CASE                = 110;
+    const T_COALESCE            = 111;
+    const T_COUNT               = 112;
+    const T_DELETE              = 113;
+    const T_DESC                = 114;
+    const T_DISTINCT            = 115;
+    const T_EMPTY               = 116;
+    const T_ESCAPE              = 117;
+    const T_EXISTS              = 118;
+    const T_FALSE               = 119;
+    const T_FROM                = 120;
+    const T_GROUP               = 121;
+    const T_HAVING              = 122;
+    const T_IN                  = 123;
+    const T_INDEX               = 124;
+    const T_INNER               = 125;
+    const T_INSTANCE            = 126;
+    const T_IS                  = 127;
+    const T_JOIN                = 128;
+    const T_LEADING             = 129;
+    const T_LEFT                = 130;
+    const T_LIKE                = 131;
+    const T_MAX                 = 132;
+    const T_MEMBER              = 133;
+    const T_MIN                 = 134;
+    const T_NOT                 = 135;
+    const T_NULL                = 136;
+    const T_NULLIF              = 137;
+    const T_OF                  = 138;
+    const T_OR                  = 139;
+    const T_ORDER               = 140;
+    const T_OUTER               = 141;
+    const T_SELECT              = 142;
+    const T_SET                 = 143;
+    const T_SIZE                = 144;
+    const T_SOME                = 145;
+    const T_SUM                 = 146;
+    const T_TRAILING            = 147;
+    const T_TRUE                = 148;
+    const T_UPDATE              = 149;
+    const T_WHEN                = 150;
+    const T_WHERE               = 151;
+    const T_WITH                = 153;
+    const T_PARTIAL             = 154;
+    const T_MOD                 = 155;
+   
     /**
      * Creates a new query scanner object.
      *
@@ -118,7 +123,7 @@ class Lexer extends \Doctrine\Common\Lexer
     protected function getCatchablePatterns()
     {
         return array(
-            '[a-z_][a-z0-9_\:\\\]*[a-z0-9_]{1}',
+            '[a-z_\\\][a-z0-9_\:\\\]*[a-z0-9_]{1}',
             '(?:[0-9]+(?:[\.][0-9]+)*)(?:e[+-]?[0-9]+)?',
             "'(?:[^']|'')*'",
             '\?[1-9][0-9]*|:[a-z][a-z0-9_]+'
@@ -136,7 +141,7 @@ class Lexer extends \Doctrine\Common\Lexer
     /**
      * @inheritdoc
      */
-    protected function _getType(&$value)
+    protected function getType(&$value)
     {
         $type = self::T_NONE;
 
