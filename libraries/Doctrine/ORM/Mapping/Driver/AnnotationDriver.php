@@ -180,15 +180,13 @@ class AnnotationDriver implements Driver
                         'length' => $discrColumnAnnot->length
                     ));
                 } else {
-                    throw MappingException::missingDiscriminatorColumn($className);
+                    $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
 
                 // Evaluate DiscriminatorMap annotation
                 if (isset($classAnnotations['Doctrine\ORM\Mapping\DiscriminatorMap'])) {
                     $discrMapAnnot = $classAnnotations['Doctrine\ORM\Mapping\DiscriminatorMap'];
                     $metadata->setDiscriminatorMap($discrMapAnnot->value);
-                } else {
-                    throw MappingException::missingDiscriminatorMap($className);
                 }
             }
         }
@@ -439,7 +437,7 @@ class AnnotationDriver implements Driver
 
         foreach ($this->_paths as $path) {
             if ( ! is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath();
+                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
             }
 
             $iterator = new \RecursiveIteratorIterator(

@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -301,6 +299,9 @@ class SchemaTool
         $options = array();
         $options['length'] = isset($mapping['length']) ? $mapping['length'] : null;
         $options['notnull'] = isset($mapping['nullable']) ? ! $mapping['nullable'] : true;
+        if ($class->isInheritanceTypeSingleTable() && count($class->parentClasses) > 0) {
+            $options['notnull'] = false;
+        }
 
         $options['platformOptions'] = array();
         $options['platformOptions']['version'] = $class->isVersioned && $class->versionField == $mapping['fieldName'] ? true : false;
@@ -441,6 +442,12 @@ class SchemaTool
                 $columnOptions = array('notnull' => false, 'columnDefinition' => $columnDef);
                 if (isset($joinColumn['nullable'])) {
                     $columnOptions['notnull'] = !$joinColumn['nullable'];
+                }
+                if ($fieldMapping['type'] == "string") {
+                    $columnOptions['length'] = $fieldMapping['length'];
+                } else if ($fieldMapping['type'] == "decimal") {
+                    $columnOptions['scale'] = $fieldMapping['scale'];
+                    $columnOptions['precision'] = $fieldMapping['precision'];
                 }
 
                 $theJoinTable->addColumn(

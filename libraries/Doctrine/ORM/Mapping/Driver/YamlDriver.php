@@ -80,14 +80,12 @@ class YamlDriver extends AbstractFileDriver
                         'length' => $discrColumn['length']
                     ));
                 } else {
-                    throw MappingException::missingDiscriminatorColumn($className);
+                    $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
 
                 // Evaluate discriminatorMap
                 if (isset($element['discriminatorMap'])) {
                     $metadata->setDiscriminatorMap($element['discriminatorMap']);
-                } else {
-                    throw MappingException::missingDiscriminatorMap($className);
                 }
             }
         }

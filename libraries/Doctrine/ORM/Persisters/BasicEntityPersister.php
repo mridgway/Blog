@@ -273,7 +273,10 @@ class BasicEntityPersister
         $updateData = $this->_prepareUpdateData($entity);
         $tableName = $this->_class->table['name'];
         if (isset($updateData[$tableName]) && $updateData[$tableName]) {
-            $this->_updateTable($entity, $tableName, $updateData[$tableName], $this->_class->isVersioned);
+            $this->_updateTable(
+                $entity, $this->_class->getQuotedTableName($this->_platform),
+                $updateData[$tableName], $this->_class->isVersioned
+            );
         }
     }
 
@@ -282,11 +285,11 @@ class BasicEntityPersister
      * The UPDATE can optionally be versioned, which requires the entity to have a version field.
      *
      * @param object $entity The entity object being updated.
-     * @param string $tableName The name of the table to apply the UPDATE on.
+     * @param string $quotedTableName The quoted name of the table to apply the UPDATE on.
      * @param array $updateData The map of columns to update (column => value).
      * @param boolean $versioned Whether the UPDATE should be versioned.
      */
-    protected final function _updateTable($entity, $tableName, array $updateData, $versioned = false)
+    protected final function _updateTable($entity, $quotedTableName, array $updateData, $versioned = false)
     {
         $set = $params = $types = array();
 
@@ -322,7 +325,7 @@ class BasicEntityPersister
             $types[] = $this->_class->fieldMappings[$versionField]['type'];
         }
 
-        $sql = "UPDATE $tableName SET " . implode(', ', $set)
+        $sql = "UPDATE $quotedTableName SET " . implode(', ', $set)
             . ' WHERE ' . implode(' = ? AND ', $where) . ' = ?';
 
         $result = $this->_conn->executeUpdate($sql, $params, $types);
@@ -386,17 +389,7 @@ class BasicEntityPersister
         $this->deleteJoinTableRecords($identifier);
 
         $id = array_combine($this->_class->getIdentifierColumnNames(), $identifier);
-        $this->_conn->delete($this->_class->table['name'], $id);
-    }
-
-    /**
-     * Gets the ClassMetadata instance of the entity class this persister is used for.
-     *
-     * @return Doctrine\ORM\Mapping\ClassMetadata
-     */
-    public function getClassMetadata()
-    {
-        return $this->_class;
+        $this->_conn->delete($this->_class->getQuotedTableName($this->_platform), $id);
     }
 
     /**
@@ -653,7 +646,7 @@ class BasicEntityPersister
                         if ($found = $this->_em->getUnitOfWork()->tryGetById($joinColumnValues, $targetClass->rootEntityName)) {
                             $this->_class->reflFields[$field]->setValue($entity, $found);
                             // Complete inverse side, if necessary.
-                            if ($assoc['inversedBy']) {
+                            if ($assoc['inversedBy'] && $assoc['type'] & ClassMetadata::ONE_TO_ONE) {
                                 $inverseAssoc = $targetClass->associationMappings[$assoc['inversedBy']];
                                 $targetClass->reflFields[$inverseAssoc['fieldName']]->setValue($found, $entity);
                             }
@@ -674,6 +667,9 @@ class BasicEntityPersister
                 }
             } else if ($value instanceof PersistentCollection && $value->isInitialized()) {
                 $value->setInitialized(false);
+                // no matter if dirty or non-dirty entities are already loaded, smoke them out!
+                // the beauty of it being, they are still in the identity map
+                $value->unwrap()->clear(); 
                 $newData[$field] = $value;
             }
         }
@@ -1120,6 +1116,19 @@ class BasicEntityPersister
                     $conditionSql .= $this->_getSQLTableAlias($this->_class->name) . '.';
                 }
                 $conditionSql .= $this->_class->getQuotedColumnName($field, $this->_platform);
+            } else if (isset($this->_class->associationMappings[$field])) {
+                if (!$this->_class->associationMappings[$field]['isOwningSide']) {
+                    throw ORMException::invalidFindByInverseAssociation($this->_class->name, $field);
+                }
+
+                if (isset($this->_class->associationMappings[$field]['inherited'])) {
+                    $conditionSql .= $this->_getSQLTableAlias($this->_class->associationMappings[$field]['inherited']) . '.';
+                } else {
+                    $conditionSql .= $this->_getSQLTableAlias($this->_class->name) . '.';
+                }
+                
+
+                $conditionSql .= $this->_class->associationMappings[$field]['joinColumns'][0]['name'];
             } else if ($assoc !== null) {
                 if ($assoc['type'] == ClassMetadata::MANY_TO_MANY) {
                     $owningAssoc = $assoc['isOwningSide'] ? $assoc : $this->_em->getClassMetadata($assoc['targetEntity'])
