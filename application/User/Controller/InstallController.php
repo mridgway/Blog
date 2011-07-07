@@ -18,8 +18,9 @@ class InstallController extends \ZendX\Application53\Controller\Action
     public function init()
     {
         // Skip ACL check if this is first install
+        /** @var $conn \Doctrine\DBAL\Connection */
         $conn = \Zend_Registry::get('em')->getConnection();
-        $stmt = $conn->prepare('SHOW TABLES;');
+        $stmt = $conn->prepare($conn->getDatabasePlatform()->getListTablesSQL());
         $stmt->execute();
         $results = $stmt->fetchAll();
         if (!empty($results)) {
