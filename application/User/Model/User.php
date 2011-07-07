@@ -4,6 +4,7 @@ namespace User\Model;
 
 /**
  * @Entity
+ * @Table(name="`User`")
  */
 class User extends \Core\Model\AbstractModel implements \Zend_Acl_Role_Interface
 {
